@@ -1,8 +1,6 @@
 package edu.fudan.ooad.operation;
 
-import edu.fudan.ooad.entity.Equipment;
-import edu.fudan.ooad.entity.Task;
-import edu.fudan.ooad.entity.Type;
+import edu.fudan.ooad.entity.*;
 import edu.fudan.ooad.util.DateUtils;
 
 import java.util.Calendar;
@@ -37,11 +35,27 @@ public class MaintenanceOperation {
     }
 
     public static int getTotalMaintenanceTime(Equipment equipment) {
-        return 0;
+        String hqlString = String.format("where equipmentId='%s' and typeId='%s'",
+                equipment.getId(), equipment.getTypeId());
+        List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
+        int total = 0;
+        for (Record record :
+                records) {
+            total += record.getDuration();
+        }
+        return total;
     }
 
-    public static int getTotalMaintenanceTime(Equipment equipment, Type type) {
-        return 0;
+    public static int getTotalMaintenanceTime(Equipment equipment, Plan plan) {
+        String hqlString = String.format("where equipmentId='%s' and typeId='%s' and planId='%s'",
+                equipment.getId(), equipment.getTypeId(), plan.getId());
+        List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
+        int total = 0;
+        for (Record record :
+                records) {
+            total += record.getDuration();
+        }
+        return total;
     }
 
 }

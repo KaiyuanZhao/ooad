@@ -60,7 +60,7 @@ public class BaseOperation {
         Session session = null;
         try {
             session = HibernateManager.getSession();
-            String queryString = "from " + clazz.getSimpleName() + hql;
+            String queryString = "from " + clazz.getSimpleName() + " " + hql;
             Query query = session.createQuery(queryString);
             return query.list();
         } finally {
@@ -72,7 +72,7 @@ public class BaseOperation {
         Session session = null;
         try {
             session = HibernateManager.getSession();
-            String queryString = "from " + clazz.getSimpleName() + sql;
+            String queryString = "from " + clazz.getSimpleName() + " " + sql;
             Query query = session.createSQLQuery(queryString);
             return query.list();
         } finally {
