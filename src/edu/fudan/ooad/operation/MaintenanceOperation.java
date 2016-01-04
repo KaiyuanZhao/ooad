@@ -1,20 +1,62 @@
 package edu.fudan.ooad.operation;
 
-import edu.fudan.ooad.entity.*;
+import edu.fudan.ooad.entity.Equipment;
+import edu.fudan.ooad.entity.Plan;
+import edu.fudan.ooad.entity.Record;
+import edu.fudan.ooad.entity.Task;
+import edu.fudan.ooad.provider.HibernateManager;
 import edu.fudan.ooad.util.DateUtils;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
+@SuppressWarnings("unchecked")
 public class MaintenanceOperation {
 
+    public static final long MILL_SEC_DAY = 60 * 60 * 24 * 1000;
+
+    public static List<Task> getDaysTask(Date date, int days) {
+        List<Task> taskList = new ArrayList<>();
+        Session session = null;
+        try {
+            session = HibernateManager.getSession();
+            String hqlString = "from Equipment, Plan where Equipment.typeId=Plan.typeId";
+            List<Object[]> equipmentWithPlan = session.createQuery(hqlString).list();
+            for (Object[] objects :
+                    equipmentWithPlan) {
+                Equipment equipment = (Equipment) objects[0];
+                Plan plan = (Plan) objects[1];
+                Date lastMaintenanceDate = equipment.getTime();
+                String newHqlString = String.format("from Record where planId='%s' " +
+                                "and equipmentId='%s' order by date desc",
+                        plan.getId(), equipment.getId());
+                Query query = session.createQuery(newHqlString);
+                query.setFirstResult(0);
+                query.setMaxResults(1);
+                List<Record> records = query.list();
+                if (records != null && records.size() == 1) {
+                    lastMaintenanceDate = records.get(0).getDate();
+                }
+                Calendar calendar = DateUtils.getCalendar(lastMaintenanceDate);
+                calendar.add(Calendar.DAY_OF_YEAR, plan.getInterval());
+                Date newDate = calendar.getTime();
+                long intervalDays = (newDate.getTime() - date.getTime()) / MILL_SEC_DAY;
+                if (intervalDays <= days) {
+                    taskList.add(new Task(equipment, plan, newDate));
+                }
+            }
+        } finally {
+            HibernateManager.closeSession(session);
+        }
+        return taskList;
+    }
+
     public static List<Task> getTenDaysTask(Date date) {
-        return Collections.emptyList();
+        return getDaysTask(date, 10);
     }
 
     public static List<Task> getTenDaysTask() {
@@ -31,7 +73,8 @@ public class MaintenanceOperation {
     }
 
     public static List<Task> getMonthTask(int year, int month) {
-        return Collections.emptyList();
+        Calendar calendar = DateUtils.getCalendar(year, month, 0);
+        return getDaysTask(calendar.getTime(), calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
     }
 
     public static int getTotalMaintenanceTime(Equipment equipment) {
