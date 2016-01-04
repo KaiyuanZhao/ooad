@@ -45,7 +45,7 @@ public class MaintenanceOperation {
                     lastMaintenanceDate = records.get(0).getDate();
                 }
                 Calendar calendar = DateUtils.getCalendar(lastMaintenanceDate);
-                calendar.add(Calendar.DAY_OF_YEAR, plan.getInterval());
+                calendar.add(Calendar.DAY_OF_YEAR, plan.getSpace());
                 Date newDate = calendar.getTime();
                 long intervalDays = (newDate.getTime() - date.getTime()) / MILL_SEC_DAY;
                 if (intervalDays <= days) {

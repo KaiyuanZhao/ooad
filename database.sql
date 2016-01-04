@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `ooad` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ooad`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ooad
@@ -60,7 +58,7 @@ DROP TABLE IF EXISTS `plan`;
 CREATE TABLE `plan` (
   `id` varchar(25) NOT NULL,
   `typeId` varchar(25) DEFAULT NULL,
-  `interval` int(11) NOT NULL,
+  `space` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `comment` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -117,4 +115,4 @@ CREATE TABLE `type` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-04 22:47:14
+-- Dump completed on 2016-01-05  2:37:30

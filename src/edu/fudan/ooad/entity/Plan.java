@@ -12,17 +12,17 @@ import javax.persistence.Id;
 public class Plan extends IEntity {
     private String id;
     private String typeId;
-    private int interval;
+    private int space;
     private String name;
     private String comment;
 
     public Plan() {
     }
 
-    public Plan(String id, String typeId, int interval, String name, String comment) {
+    public Plan(String id, String typeId, int space, String name, String comment) {
         this.id = id;
         this.typeId = typeId;
-        this.interval = interval;
+        this.space = space;
         this.name = name;
         this.comment = comment;
     }
@@ -48,13 +48,13 @@ public class Plan extends IEntity {
     }
 
     @Basic
-    @Column(name = "interval", nullable = false)
-    public int getInterval() {
-        return interval;
+    @Column(name = "space", nullable = false)
+    public int getSpace() {
+        return space;
     }
 
-    public void setInterval(int interval) {
-        this.interval = interval;
+    public void setSpace(int space) {
+        this.space = space;
     }
 
     @Basic
@@ -84,7 +84,7 @@ public class Plan extends IEntity {
 
         Plan plan = (Plan) o;
 
-        if (interval != plan.interval) return false;
+        if (space != plan.space) return false;
         if (id != null ? !id.equals(plan.id) : plan.id != null) return false;
         if (typeId != null ? !typeId.equals(plan.typeId) : plan.typeId != null) return false;
         if (name != null ? !name.equals(plan.name) : plan.name != null) return false;
@@ -97,7 +97,7 @@ public class Plan extends IEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
-        result = 31 * result + interval;
+        result = 31 * result + space;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         return result;
@@ -108,7 +108,7 @@ public class Plan extends IEntity {
         return "Plan{" +
                 "id='" + id + '\'' +
                 ", typeId='" + typeId + '\'' +
-                ", interval=" + interval +
+                ", space=" + space +
                 ", name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 '}';
