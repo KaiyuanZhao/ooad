@@ -4,15 +4,14 @@ import edu.fudan.ooad.entity.*;
 import edu.fudan.ooad.operation.BaseOperation;
 import edu.fudan.ooad.operation.MaintenanceOperation;
 import edu.fudan.ooad.util.DateUtils;
-import org.hibernate.dialect.ResultColumnReferenceStrategy;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by lss on 2016/1/4.
@@ -31,10 +30,19 @@ public class FunctionTest {
 
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() {
         BaseOperation.insert(type1);
         BaseOperation.insert(type2);
         BaseOperation.insert(engineer);
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        BaseOperation.delete(Record.class);
+        BaseOperation.delete(Plan.class);
+        BaseOperation.delete(Equipment.class);
+        BaseOperation.delete(Type.class);
+        BaseOperation.delete(Engineer.class);
     }
 
     /**
@@ -67,11 +75,11 @@ public class FunctionTest {
      * test the insertion of plan
      */
     @Test
-    public void testInsertPlan(){
+    public void testInsertPlan() {
         Plan p1 = new Plan("plan0", type1.getId(), 30, "small", "comment");
         Plan p2 = new Plan("plan1", type1.getId(), 60, "large", "comment");
         Plan p3 = new Plan("plan2", type2.getId(), 30, "small", "comment");
-        Plan p4 = new Plan("plan3", type2.getId(), 60 ,"large", "comment");
+        Plan p4 = new Plan("plan3", type2.getId(), 60, "large", "comment");
         BaseOperation.insert(p1);
         BaseOperation.insert(p2);
         BaseOperation.insert(p3);
@@ -84,7 +92,7 @@ public class FunctionTest {
      * test insert record
      */
     @Test
-    public void testInsertRecord(){
+    public void testInsertRecord() {
         Record r0 = new Record("r1", "plan0", "A100", engineer.getId(),
                 DateUtils.getCalendar(2015, 10, 1).getTime(), 3, "cleaning");
 
@@ -117,13 +125,13 @@ public class FunctionTest {
     }
 
     @Test
-    public void testGetMonthTask(){
+    public void testGetMonthTask() {
         List<Task> l = MaintenanceOperation.getMonthTask(2015, 12);
         assertEquals("something wrong with get month tasks", 4, l.size());
     }
 
     @Test
-    public void testGetTenDayTask(){
+    public void testGetTenDayTask() {
         List<Task> l1 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2015, 10, 27).getTime());
         assertEquals("something wrong with get 10 days' tasks - 1", 4, l1.size());
         List<Task> l2 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2016, 1, 1).getTime());
@@ -131,7 +139,7 @@ public class FunctionTest {
     }
 
     @Test
-    public void testGetTotalMaintenanceTime(){
+    public void testGetTotalMaintenanceTime() {
         int i1 = MaintenanceOperation.getTotalMaintenanceTime(equipment1);
         assertEquals("wrong with total time of equipment1", i1, 11);
         int i2 = MaintenanceOperation.getTotalMaintenanceTime(equipment2);
@@ -145,15 +153,6 @@ public class FunctionTest {
         assertEquals("wrong with total time in certain type - equipment1", i5, 6);
         int i6 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan2");
         assertEquals("wrong with total time of certain type - equipment3", i6, 3);
-    }
-
-    @AfterClass
-    public static void tearDown(){
-        BaseOperation.delete(Record.class);
-        BaseOperation.delete(Plan.class);
-        BaseOperation.delete(Equipment.class);
-        BaseOperation.delete(Type.class);
-        BaseOperation.delete(Engineer.class);
     }
 
 

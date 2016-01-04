@@ -25,23 +25,23 @@ public class PlanTest {
     static Equipment equipment = new Equipment("id1", type.getId(), "model", "location", Calendar.getInstance().getTime());
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() {
         BaseOperation.insert(type);
         BaseOperation.insert(equipment);
     }
 
+    @AfterClass
+    public static void tearDown() {
+        BaseOperation.delete(type);
+        BaseOperation.delete(equipment);
+    }
+
     @Test
-    public void testInsertPlan(){
+    public void testInsertPlan() {
         Plan p = new Plan("p1", type.getId(), 30, "small", "testing");
         BaseOperation.insert(p);
         assertNotNull("failure in plan insertion", BaseOperation.query(Plan.class, p.getId()));
         assertEquals("failure in plan insertion", 1, BaseOperation.queryAll(Record.class));
         BaseOperation.delete(p);
-    }
-
-    @AfterClass
-    public static void tearDown(){
-        BaseOperation.delete(type);
-        BaseOperation.delete(equipment);
     }
 }

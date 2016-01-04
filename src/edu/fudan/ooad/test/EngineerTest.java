@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class EngineerTest {
     @Test
-    public void testInsertEngineer(){
+    public void testInsertEngineer() {
         Engineer engineer = new Engineer("eng1", "Jack");
         BaseOperation.insert(engineer);
         List<Engineer> list = BaseOperation.query(Engineer.class, engineer.getId());

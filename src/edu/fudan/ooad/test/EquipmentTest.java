@@ -10,8 +10,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.List;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lss on 2016/1/4.
@@ -21,8 +20,14 @@ public class EquipmentTest {
     static Equipment equipment = new Equipment("test1", type.getId(), "model", "location", Calendar.getInstance().getTime());
 
     @BeforeClass
-    public static void setUPBeforeTest(){
+    public static void setUPBeforeTest() {
         BaseOperation.insert(type);
+    }
+
+    @AfterClass
+    public static void tearDownAfterTest() {
+        BaseOperation.delete(equipment);
+        BaseOperation.delete(type);
     }
 
     /**
@@ -34,12 +39,6 @@ public class EquipmentTest {
         BaseOperation.insert(equipment);
         List<Equipment> list = BaseOperation.query(Equipment.class, equipment.getId());
         assertEquals("failure in equipment insertion", list.size(), 1);
-    }
-
-    @AfterClass
-    public static void tearDownAfterTest(){
-        BaseOperation.delete(equipment);
-        BaseOperation.delete(type);
     }
 
 

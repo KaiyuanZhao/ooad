@@ -2,10 +2,7 @@ package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.operation.BaseOperation;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import edu.fudan.ooad.entity.Type;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 public class TypeTest {
 
     @Test
-    public void testInsertType(){
+    public void testInsertType() {
         Type type = new Type("eng1", "Jack");
         BaseOperation.insert(type);
         List<Type> list = BaseOperation.query(Type.class, type.getId());
