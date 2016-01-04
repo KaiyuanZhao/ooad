@@ -1,7 +1,7 @@
 package edu.fudan.ooad.operation;
 
 import edu.fudan.ooad.entity.Equipment;
-import edu.fudan.ooad.entity.Plan;
+import edu.fudan.ooad.entity.Task;
 import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.util.DateUtils;
 
@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class MaintenanceOperation {
 
-    public static List<Plan> getTenDaysPlan(Date date) {
+    public static List<Task> getTenDaysPlan(Date date) {
         return Collections.emptyList();
     }
 
-    public static List<Plan> getTenDaysPlan() {
+    public static List<Task> getTenDaysPlan() {
         return getTenDaysPlan(DateUtils.getCurrentTime());
     }
 
