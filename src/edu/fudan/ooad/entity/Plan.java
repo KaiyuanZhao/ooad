@@ -16,6 +16,17 @@ public class Plan implements IEntity {
     private String name;
     private String comment;
 
+    public Plan() {
+    }
+
+    public Plan(String id, String typeId, String interval, String name, String comment) {
+        this.id = id;
+        this.typeId = typeId;
+        this.interval = interval;
+        this.name = name;
+        this.comment = comment;
+    }
+
     @Id
     @Column(name = "id", nullable = false, length = 25)
     public String getId() {

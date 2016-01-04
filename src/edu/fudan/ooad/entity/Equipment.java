@@ -17,6 +17,17 @@ public class Equipment implements IEntity {
     private String location;
     private Date time;
 
+    public Equipment() {
+    }
+
+    public Equipment(String id, String typeId, String model, String location, Date time) {
+        this.id = id;
+        this.typeId = typeId;
+        this.model = model;
+        this.location = location;
+        this.time = time;
+    }
+
     @Id
     @Column(name = "id", nullable = false, length = 25)
     public String getId() {
