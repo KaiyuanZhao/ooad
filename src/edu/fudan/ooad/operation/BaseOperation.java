@@ -3,6 +3,7 @@ package edu.fudan.ooad.operation;
 import edu.fudan.ooad.entity.IEntity;
 import edu.fudan.ooad.provider.HibernateManager;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -38,6 +39,42 @@ public class BaseOperation {
         try {
             session = HibernateManager.getSession();
             session.update(entity);
+        } finally {
+            HibernateManager.closeSession(session);
+        }
+    }
+
+    public static <T> List<T> query(Class<T> clazz, String id) {
+        Session session = null;
+        try {
+            session = HibernateManager.getSession();
+            String queryString = String.format("from %s where id='%s'", clazz.getSimpleName(), id);
+            Query query = session.createQuery(queryString);
+            return query.list();
+        } finally {
+            HibernateManager.closeSession(session);
+        }
+    }
+
+    public static <T> List<T> queryHQL(Class<T> clazz, String hql) {
+        Session session = null;
+        try {
+            session = HibernateManager.getSession();
+            String queryString = "from " + clazz.getSimpleName() + hql;
+            Query query = session.createQuery(queryString);
+            return query.list();
+        } finally {
+            HibernateManager.closeSession(session);
+        }
+    }
+
+    public static <T> List<T> querySQL(Class<T> clazz, String sql) {
+        Session session = null;
+        try {
+            session = HibernateManager.getSession();
+            String queryString = "from " + clazz.getSimpleName() + sql;
+            Query query = session.createSQLQuery(queryString);
+            return query.list();
         } finally {
             HibernateManager.closeSession(session);
         }
