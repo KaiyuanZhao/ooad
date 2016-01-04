@@ -5,6 +5,7 @@ import edu.fudan.ooad.operation.BaseOperation;
 import edu.fudan.ooad.operation.MaintenanceOperation;
 import edu.fudan.ooad.util.DateUtils;
 import org.hibernate.dialect.ResultColumnReferenceStrategy;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -127,7 +128,19 @@ public class FunctionTest {
         int i4 = MaintenanceOperation.getTotalMaintenanceTime(equipment4);
         assertEquals("wrong with total time of equipment4", i4, 2);
 
-//        int i5 = MaintenanceOperation.getTotalMaintenanceTime();
+        int i5 = MaintenanceOperation.getTotalMaintenanceTime(equipment1, "plan0");
+        assertEquals("wrong with total time in certain type - equipment1", i5, 6);
+        int i6 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan2");
+        assertEquals("wrong with total time of certain type - equipment3", i6, 3);
+    }
+
+    @AfterClass
+    public static void tearDown(){
+        BaseOperation.delete(Record.class);
+        BaseOperation.delete(Plan.class);
+        BaseOperation.delete(Equipment.class);
+        BaseOperation.delete(Type.class);
+        BaseOperation.delete(Engineer.class);
     }
 
 

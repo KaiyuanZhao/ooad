@@ -94,9 +94,9 @@ public class MaintenanceOperation {
         return total;
     }
 
-    public static int getTotalMaintenanceTime(Equipment equipment, Plan plan) {
+    public static int getTotalMaintenanceTime(Equipment equipment, String planId) {
         String hqlString = String.format("where equipmentId='%s' and planId='%s'",
-                equipment.getId(), plan.getId());
+                equipment.getId(), planId);
         List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
         int total = 0;
         for (Record record :
