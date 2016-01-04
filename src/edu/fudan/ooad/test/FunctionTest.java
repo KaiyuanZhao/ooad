@@ -135,14 +135,12 @@ public class FunctionTest {
     @Test
     public void testGetMonthTask() {
         List<Task> l = MaintenanceOperation.getMonthTask(2016, 1);
-        assertEquals("something wrong with get month tasks", 6, l.size());
+        assertEquals("something wrong with get month tasks", 8, l.size());
     }
 
     @Test
     public void testGetTenDayTask() {
-        List<Task> l0 = MaintenanceOperation.getTenDaysTask();
-        assertEquals("something wrong with get 10 days' tasks - 0", 1, l0.size());
-        List<Task> l1 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2016, 1, 27).getTime());
+        List<Task> l1 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2016, 1, 1).getTime());
         assertEquals("something wrong with get 10 days' tasks - 1", 7, l1.size());
     }
 
