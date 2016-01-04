@@ -1,13 +1,3 @@
-import edu.fudan.ooad.entity.Type;
-import edu.fudan.ooad.operation.BaseOperation;
-import edu.fudan.ooad.provider.HibernateManager;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.metadata.ClassMetadata;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
@@ -30,7 +20,7 @@ public class Main {
 //        } finally {
 //            session.close();
 //        }
-        List<Type> list = BaseOperation.queryAll(Type.class);
-        System.out.println(list.toString());
+//        List<Type> list = BaseOperation.queryAll(Type.class);
+//        System.out.println(list.toString());
     }
 }

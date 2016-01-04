@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Equipment implements IEntity {
+public class Equipment extends IEntity {
     private String id;
     private String typeId;
     private String model;

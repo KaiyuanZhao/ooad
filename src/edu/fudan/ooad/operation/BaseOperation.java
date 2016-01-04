@@ -13,17 +13,17 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class BaseOperation {
 
-    public static <T extends IEntity> T insert(T entity) {
+    public static <T extends IEntity> void insert(T entity) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
-            return (T) session.save(entity);
+            System.out.println(session.save(entity));
         } finally {
             HibernateManager.closeSession(session);
         }
     }
 
-    public static <T extends IEntity> void delete(T entity) {
+    public static <T> void delete(T entity) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
@@ -33,7 +33,7 @@ public class BaseOperation {
         }
     }
 
-    public static <T extends IEntity> void update(T entity) {
+    public static <T> void update(T entity) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
@@ -43,7 +43,7 @@ public class BaseOperation {
         }
     }
 
-    public static <T extends IEntity> List<T> queryAll(Class<T> clazz) {
+    public static <T> List<T> queryAll(Class<T> clazz) {
         Session session = null;
         try {
             session = HibernateManager.getSession();

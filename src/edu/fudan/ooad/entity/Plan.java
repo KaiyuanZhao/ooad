@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Plan implements IEntity {
+public class Plan extends IEntity {
     private String id;
     private String typeId;
     private String interval;
