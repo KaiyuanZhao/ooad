@@ -1,3 +1,6 @@
+import edu.fudan.ooad.entity.Equipment;
+import edu.fudan.ooad.operation.MaintenanceOperation;
+
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
@@ -20,7 +23,5 @@ public class Main {
 //        } finally {
 //            session.close();
 //        }
-//        List<Type> list = BaseOperation.queryAll(Type.class);
-//        System.out.println(list.toString());
     }
 }

@@ -4,7 +4,9 @@ import edu.fudan.ooad.entity.IEntity;
 import edu.fudan.ooad.provider.HibernateManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,9 +17,16 @@ public class BaseOperation {
 
     public static <T extends IEntity> void insert(T entity) {
         Session session = null;
+        Transaction transaction = null;
         try {
             session = HibernateManager.getSession();
-            System.out.println(session.save(entity));
+            transaction = session.beginTransaction();
+            session.save(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null)
+                transaction.rollback();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -25,9 +34,33 @@ public class BaseOperation {
 
     public static <T> void delete(T entity) {
         Session session = null;
+        Transaction transaction = null;
         try {
             session = HibernateManager.getSession();
+            transaction = session.beginTransaction();
             session.delete(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            HibernateManager.closeSession(session);
+        }
+    }
+
+    public static <T> void delete(Class<T> clazz) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateManager.getSession();
+            transaction = session.beginTransaction();
+            session.createQuery("delete " + clazz.getSimpleName()).executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null)
+                transaction.rollback();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -35,9 +68,16 @@ public class BaseOperation {
 
     public static <T> void update(T entity) {
         Session session = null;
+        Transaction transaction = null;
         try {
             session = HibernateManager.getSession();
+            transaction = session.beginTransaction();
             session.update(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null)
+                transaction.rollback();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -50,6 +90,9 @@ public class BaseOperation {
             String queryString = String.format("from %s where id='%s'", clazz.getSimpleName(), id);
             Query query = session.createQuery(queryString);
             return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -61,6 +104,9 @@ public class BaseOperation {
             session = HibernateManager.getSession();
             Query query = session.createQuery(hql);
             return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -73,6 +119,9 @@ public class BaseOperation {
             String queryString = "from " + clazz.getSimpleName() + " " + hql;
             Query query = session.createQuery(queryString);
             return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -84,6 +133,9 @@ public class BaseOperation {
             session = HibernateManager.getSession();
             Query query = session.createSQLQuery(sql);
             return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -95,6 +147,9 @@ public class BaseOperation {
             session = HibernateManager.getSession();
             Query query = session.createQuery("from " + clazz.getSimpleName());
             return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         } finally {
             HibernateManager.closeSession(session);
         }

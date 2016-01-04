@@ -9,7 +9,10 @@ import edu.fudan.ooad.util.DateUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Kaiyuan on 2016/1/4.
@@ -24,7 +27,7 @@ public class MaintenanceOperation {
         Session session = null;
         try {
             session = HibernateManager.getSession();
-            String hqlString = "from Equipment, Plan where Equipment.typeId=Plan.typeId";
+            String hqlString = "select equipment, plan from Equipment equipment, Plan plan where equipment.typeId=plan.typeId";
             List<Object[]> equipmentWithPlan = session.createQuery(hqlString).list();
             for (Object[] objects :
                     equipmentWithPlan) {
@@ -49,6 +52,8 @@ public class MaintenanceOperation {
                     taskList.add(new Task(equipment, plan, newDate));
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             HibernateManager.closeSession(session);
         }
@@ -78,8 +83,8 @@ public class MaintenanceOperation {
     }
 
     public static int getTotalMaintenanceTime(Equipment equipment) {
-        String hqlString = String.format("where equipmentId='%s' and typeId='%s'",
-                equipment.getId(), equipment.getTypeId());
+        String hqlString = String.format("where equipmentId='%s'",
+                equipment.getId());
         List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
         int total = 0;
         for (Record record :
@@ -90,8 +95,8 @@ public class MaintenanceOperation {
     }
 
     public static int getTotalMaintenanceTime(Equipment equipment, Plan plan) {
-        String hqlString = String.format("where equipmentId='%s' and typeId='%s' and planId='%s'",
-                equipment.getId(), equipment.getTypeId(), plan.getId());
+        String hqlString = String.format("where equipmentId='%s' and planId='%s'",
+                equipment.getId(), plan.getId());
         List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
         int total = 0;
         for (Record record :
