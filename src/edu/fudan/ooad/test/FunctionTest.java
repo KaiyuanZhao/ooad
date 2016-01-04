@@ -15,14 +15,13 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by lss on 2016/1/4.
+ *
+ * test query maintenance tasks in 10 days
+ * test query total maintenance time for certain machine
+ * test query total maintenance time for certain machine in certain type
+ *
  */
 public class FunctionTest {
-    // test insert equipment
-    // test insert maintenance plan for certain type
-    // test insert maintenance record for single machine
-    // test query maintenance tasks in 10 days
-    // test query total maintenance time for certain machine
-    // test query total maintenance time for certain machine in certain type
     static Type type1 = new Type("TV", "television");
     static Type type2 = new Type("RR", "refrigerator");
     static Engineer engineer = new Engineer("eng1", "Jack");
@@ -31,27 +30,30 @@ public class FunctionTest {
 
     @BeforeClass
     public static void setUp() {
+        deleteAll();
         BaseOperation.insert(type1);
         BaseOperation.insert(type2);
         BaseOperation.insert(engineer);
+        testInsertEquipment();
+        testInsertPlan();
+        testInsertRecord();
     }
 
     @AfterClass
     public static void tearDown() {
-        BaseOperation.delete(Record.class);
-        BaseOperation.delete(Plan.class);
-        BaseOperation.delete(Equipment.class);
-        BaseOperation.delete(Type.class);
-        BaseOperation.delete(Engineer.class);
+        deleteAll();
     }
 
     /**
      * test the insertion of equipment
      */
-    @Test
-    public void testInsertEquipment() {
+    private static void testInsertEquipment() {
+        // A100 - 2015/10/11
+        // A101 - 2015/11/5
+        // A200 - 2015/11/1
+        // A201 - 2015/12/5
         equipment1 = new Equipment("A100", type1.getId(), "model", "location",
-                DateUtils.getCalendar(2015, 9, 1).getTime());
+                DateUtils.getCalendar(2015, 9, 11).getTime());
 
         equipment2 = new Equipment("A101", type1.getId(), "model", "location",
                 DateUtils.getCalendar(2015, 10, 5).getTime());
@@ -74,8 +76,7 @@ public class FunctionTest {
     /**
      * test the insertion of plan
      */
-    @Test
-    public void testInsertPlan() {
+    private static void testInsertPlan() {
         Plan p1 = new Plan("plan0", type1.getId(), 30, "small", "comment");
         Plan p2 = new Plan("plan1", type1.getId(), 60, "large", "comment");
         Plan p3 = new Plan("plan2", type2.getId(), 30, "small", "comment");
@@ -91,16 +92,24 @@ public class FunctionTest {
     /**
      * test insert record
      */
-    @Test
-    public void testInsertRecord() {
+//    @Test
+    private static void testInsertRecord() {
+        // machine A100 of small maintenance - 2015/11/10
+        // machine A100 of small maintenance - 2015/12/10
+        // machine A100 of large maintenance - 2015/12/10
+        // machine A101 of small maintenance - 2015/12/1
+        // machine A200 of small maintenance - 2015/12/1
+        // machine A200 of large maintenance - 2016/1/1
+        // machine A201 of small maintenance - 2015/1/5
         Record r0 = new Record("r1", "plan0", "A100", engineer.getId(),
-                DateUtils.getCalendar(2015, 10, 1).getTime(), 3, "cleaning");
+                DateUtils.getCalendar(2015, 10, 10).getTime(), 3, "cleaning");
+
 
         Record r1 = new Record("r2", "plan0", "A100", engineer.getId(),
-                DateUtils.getCalendar(2015, 11, 1).getTime(), 3, "checking");
+                DateUtils.getCalendar(2015, 11, 10).getTime(), 3, "checking");
 
         Record r2 = new Record("r3", "plan1", "A100", engineer.getId(),
-                DateUtils.getCalendar(2015, 11, 1).getTime(), 5, "testing");
+                DateUtils.getCalendar(2015, 11, 10).getTime(), 5, "testing");
 
         Record r3 = new Record("r4", "plan0", "A101", engineer.getId(),
                 DateUtils.getCalendar(2015, 11, 1).getTime(), 4, "washing");
@@ -126,16 +135,16 @@ public class FunctionTest {
 
     @Test
     public void testGetMonthTask() {
-        List<Task> l = MaintenanceOperation.getMonthTask(2015, 11);
-        assertEquals("something wrong with get month tasks", 4, l.size());
+        List<Task> l = MaintenanceOperation.getMonthTask(2016, 1);
+        assertEquals("something wrong with get month tasks", 6, l.size());
     }
 
     @Test
     public void testGetTenDayTask() {
-        List<Task> l1 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2015, 10, 27).getTime());
-        assertEquals("something wrong with get 10 days' tasks - 1", 4, l1.size());
-        List<Task> l2 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2016, 1, 1).getTime());
-        assertEquals("something wrong with get 10 days tasks - 2", 1, l2.size());
+        List<Task> l0 = MaintenanceOperation.getTenDaysTask();
+        assertEquals("something wrong with get 10 days' tasks - 0", 1, l0.size());
+        List<Task> l1 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2016, 1, 27).getTime());
+        assertEquals("something wrong with get 10 days' tasks - 1", 7, l1.size());
     }
 
     @Test
@@ -153,6 +162,14 @@ public class FunctionTest {
         assertEquals("wrong with total time in certain type - equipment1", i5, 6);
         int i6 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan2");
         assertEquals("wrong with total time of certain type - equipment3", i6, 3);
+    }
+
+    private  static void deleteAll(){
+        BaseOperation.delete(Record.class);
+        BaseOperation.delete(Plan.class);
+        BaseOperation.delete(Equipment.class);
+        BaseOperation.delete(Type.class);
+        BaseOperation.delete(Engineer.class);
     }
 
 
