@@ -82,9 +82,9 @@ public class MaintenanceOperation {
         return getDaysTask(calendar.getTime(), calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
     }
 
-    public static int getTotalMaintenanceTime(Equipment equipment) {
+    public static int getTotalMaintenanceTime(String equipmentId) {
         String hqlString = String.format("where equipmentId='%s'",
-                equipment.getId());
+                equipmentId);
         List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
         int total = 0;
         for (Record record :

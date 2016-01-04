@@ -67,7 +67,7 @@ public class FunctionTest {
         BaseOperation.insert(equipment3);
         BaseOperation.insert(equipment4);
         assertNotNull("failure in equipment insertion", BaseOperation.queryAll(Equipment.class));
-        assertEquals("failure in equipment insertion", 4, BaseOperation.queryAll(Equipment.class));
+        assertEquals("failure in equipment insertion", 4, BaseOperation.queryAll(Equipment.class).size());
 
     }
 
@@ -85,7 +85,7 @@ public class FunctionTest {
         BaseOperation.insert(p3);
         BaseOperation.insert(p4);
         assertNotNull("failure in plan insertion", BaseOperation.queryAll(Plan.class));
-        assertEquals("failure in plan insertion", 4, BaseOperation.queryAll(Plan.class));
+        assertEquals("failure in plan insertion", 4, BaseOperation.queryAll(Plan.class).size());
     }
 
     /**
@@ -121,12 +121,12 @@ public class FunctionTest {
         BaseOperation.insert(r4);
         BaseOperation.insert(r5);
         BaseOperation.insert(r6);
-        assertEquals("something wrong with record insert", 7, BaseOperation.queryAll(Record.class));
+        assertEquals("something wrong with record insert", 7, BaseOperation.queryAll(Record.class).size());
     }
 
     @Test
     public void testGetMonthTask() {
-        List<Task> l = MaintenanceOperation.getMonthTask(2015, 12);
+        List<Task> l = MaintenanceOperation.getMonthTask(2015, 11);
         assertEquals("something wrong with get month tasks", 4, l.size());
     }
 
@@ -140,13 +140,13 @@ public class FunctionTest {
 
     @Test
     public void testGetTotalMaintenanceTime() {
-        int i1 = MaintenanceOperation.getTotalMaintenanceTime(equipment1);
+        int i1 = MaintenanceOperation.getTotalMaintenanceTime("A100");
         assertEquals("wrong with total time of equipment1", i1, 11);
-        int i2 = MaintenanceOperation.getTotalMaintenanceTime(equipment2);
+        int i2 = MaintenanceOperation.getTotalMaintenanceTime("A101");
         assertEquals("wrong with total time of equipment2", i2, 4);
-        int i3 = MaintenanceOperation.getTotalMaintenanceTime(equipment3);
+        int i3 = MaintenanceOperation.getTotalMaintenanceTime("A200");
         assertEquals("wrong with total time of equipment3", i3, 8);
-        int i4 = MaintenanceOperation.getTotalMaintenanceTime(equipment4);
+        int i4 = MaintenanceOperation.getTotalMaintenanceTime("A201");
         assertEquals("wrong with total time of equipment4", i4, 2);
 
         int i5 = MaintenanceOperation.getTotalMaintenanceTime(equipment1, "plan0");

@@ -41,7 +41,7 @@ public class PlanTest {
         Plan p = new Plan("p1", type.getId(), 30, "small", "testing");
         BaseOperation.insert(p);
         assertNotNull("failure in plan insertion", BaseOperation.query(Plan.class, p.getId()));
-        assertEquals("failure in plan insertion", 1, BaseOperation.queryAll(Record.class));
+        assertEquals("failure in plan insertion", 1, BaseOperation.queryAll(Plan.class).size());
         BaseOperation.delete(p);
     }
 }
