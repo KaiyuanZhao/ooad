@@ -2,6 +2,7 @@ package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.Equipment;
 import edu.fudan.ooad.entity.Plan;
+import edu.fudan.ooad.entity.Record;
 import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.operation.BaseOperation;
 import org.junit.AfterClass;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import java.util.Calendar;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lss on 2016/1/4.
@@ -33,6 +35,7 @@ public class PlanTest {
         Plan p = new Plan("p1", type.getId(), 30, "small", "testing");
         BaseOperation.insert(p);
         assertNotNull("failure in plan insertion", BaseOperation.query(Plan.class, p.getId()));
+        assertEquals("failure in plan insertion", 1, BaseOperation.queryAll(Record.class));
         BaseOperation.delete(p);
     }
 

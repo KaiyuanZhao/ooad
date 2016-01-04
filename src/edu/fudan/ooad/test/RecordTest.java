@@ -12,6 +12,7 @@ import org.junit.Test;
 
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lss on 2016/1/4.
@@ -20,7 +21,7 @@ public class RecordTest {
 
     static Type tv = new Type("TV", "television");
     static Equipment equipment = new Equipment("A100", tv.getId(), "TCL", "Shanghai",
-            DateUtils.transferTimeStringToDate("2015-01-01", "YYYY-MM-DD"));
+            DateUtils.getCalendar(2015, 0, 1).getTime());
     static Plan plan = new Plan("plan1", tv.getId(), 30, "small", "");
 
     @BeforeClass
@@ -33,17 +34,18 @@ public class RecordTest {
     @Test
     public void testInsertRecord(){
         Record record1 = new Record("rec1", "plan1", "A100", "eng1",
-                DateUtils.transferTimeStringToDate("2015-01-30", "YYYY-MM-DD"), 2, "cleaning");
+                DateUtils.getCalendar(2015, 0, 30).getTime(), 2, "cleaning");
         BaseOperation.insert(record1);
         assertNotNull("failure in record insertion", BaseOperation.queryAll(Record.class));
+        assertEquals("something wrong with record insert", 1, BaseOperation.queryAll(Record.class));
         BaseOperation.delete(record1);
     }
 
     @AfterClass
     public static void tearDown(){
-        BaseOperation.delete(tv);
-        BaseOperation.delete(equipment);
         BaseOperation.delete(plan);
+        BaseOperation.delete(equipment);
+        BaseOperation.delete(tv);
     }
 
 }
