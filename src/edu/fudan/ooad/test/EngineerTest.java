@@ -19,7 +19,7 @@ public class EngineerTest {
         BaseOperation.insert(engineer);
         List<Engineer> list = BaseOperation.query(Engineer.class, engineer.getId());
         assertNotNull("insert failed for engineer", list);
-        assertEquals("Failure in engineer insertion!", list.get(0));
+        assertEquals("Failure in engineer insertion!", engineer, list.get(0));
         BaseOperation.delete(engineer);
     }
 }

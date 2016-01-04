@@ -1,9 +1,10 @@
 package edu.fudan.ooad.test;
 
-import edu.fudan.ooad.entity.Engineer;
-import edu.fudan.ooad.entity.Equipment;
-import edu.fudan.ooad.entity.Type;
+import edu.fudan.ooad.entity.*;
 import edu.fudan.ooad.operation.BaseOperation;
+import edu.fudan.ooad.operation.MaintenanceOperation;
+import edu.fudan.ooad.util.DateUtils;
+import org.hibernate.dialect.ResultColumnReferenceStrategy;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,16 +23,16 @@ public class FunctionTest {
     // test query maintenance tasks in 10 days
     // test query total maintenance time for certain machine
     // test query total maintenance time for certain machine in certain type
-    static Type type = new Type("TV", "television");
+    static Type type1 = new Type("TV", "television");
+    static Type type2 = new Type("RR", "refrigerator");
     static Engineer engineer = new Engineer("eng1", "Jack");
-    Equipment equipment = new Equipment();
+    Equipment equipment1, equipment2, equipment3, equipment4;
 
 
     @BeforeClass
     public static void setUp(){
-//        Type type = new Type("TV", "television");
-        BaseOperation.insert(type);
-//        Engineer engineer = new Engineer("eng1", "Jack");
+        BaseOperation.insert(type1);
+        BaseOperation.insert(type2);
         BaseOperation.insert(engineer);
     }
 
@@ -40,10 +41,20 @@ public class FunctionTest {
      */
     @Test
     public void testInsertEquipment() {
-        equipment = new Equipment("A100", "TV", "model", "location", Calendar.getInstance().getTime());
-        BaseOperation.insert(equipment);
-        List<Equipment> list = BaseOperation.query(Equipment.class, equipment.getId());
-        assertEquals("Failure in equipment insertion", equipment, list.get(0));
+        equipment1 = new Equipment("A100", type1.getId(), "model", "location",
+                DateUtils.transferTimeStringToDate("2015-10-01"));
+        equipment2 = new Equipment("A101", type1.getId(), "model", "location",
+                DateUtils.transferTimeStringToDate("2015-11-05"));
+        equipment3 = new Equipment("A200", type2.getId(), "model", "location",
+                DateUtils.transferTimeStringToDate("2015-11-01"));
+        equipment4 = new Equipment("A201", type2.getId(), "model", "location",
+                DateUtils.transferTimeStringToDate("2015-12-05"));
+        BaseOperation.insert(equipment1);
+        BaseOperation.insert(equipment2);
+        BaseOperation.insert(equipment3);
+        BaseOperation.insert(equipment4);
+        assertNotNull("failure in equipment insertion", BaseOperation.queryAll(Equipment.class));
+
     }
 
     /**
@@ -51,9 +62,73 @@ public class FunctionTest {
      */
     @Test
     public void testInsertPlan(){
+        Plan p1 = new Plan("plan0", type1.getId(), 30, "small", "");
+        Plan p2 = new Plan("plan1", type1.getId(), 60, "large", "");
+        Plan p3 = new Plan("plan2", type2.getId(), 30, "small", "");
+        Plan p4 = new Plan("plan3", type2.getId(), 60 ,"large", "");
+        BaseOperation.insert(p1);
+        BaseOperation.insert(p2);
+        BaseOperation.insert(p3);
+        BaseOperation.insert(p4);
+        assertNotNull("failure in plan insertion", BaseOperation.queryAll(Plan.class));
     }
 
+    /**
+     * test insert record
+     */
+    @Test
+    public void testInsertRecord(){
+        Record r0 = new Record("r1", "plan0", "A100", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2015-11-01"), 3, "cleaning");
+        Record r1 = new Record("r2", "plan0", "A100", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2015-12-01"), 3, "checking");
+        Record r2 = new Record("r3", "plan1", "A100", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2015-12-01"), 5, "testing");
+        Record r3 = new Record("r4", "plan0", "A101", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2015-12-05"), 4, "washing");
+        Record r4 = new Record("r5", "plan2", "A201", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2016-01-05"), 2, "cleaning");
+        Record r5 = new Record("r6", "plan2", "A200", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2015-12-01"), 3, "fixing bugs");
+        Record r6 = new Record("r7", "plan3", "A200", engineer.getId(),
+                DateUtils.transferTimeStringToDate("2016-01-01"), 5, "repairing");
+        BaseOperation.insert(r0);
+        BaseOperation.insert(r1);
+        BaseOperation.insert(r2);
+        BaseOperation.insert(r3);
+        BaseOperation.insert(r4);
+        BaseOperation.insert(r5);
+        BaseOperation.insert(r6);
+        assertEquals("something wrong with record insert", 7, BaseOperation.queryAll(Record.class));
+    }
 
+    @Test
+    public void testGetMonthTask(){
+        List<Task> l = MaintenanceOperation.getMonthTask(2015, 12);
+        assertEquals("something wrong with get month tasks", 4, l.size());
+    }
+
+    @Test
+    public void testGetTenDayTask(){
+        List<Task> l1 = MaintenanceOperation.getTenDaysTask(DateUtils.transferTimeStringToDate("2015-11-27"));
+        assertEquals("something wrong with get 10 days' tasks - 1", 4, l1.size());
+        List<Task> l2 = MaintenanceOperation.getTenDaysTask(DateUtils.transferTimeStringToDate("2016-2-1"));
+        assertEquals("something wrong with get 10 days tasks - 2", 6, l2.size());
+    }
+
+    @Test
+    public void testGetTotalMaintenanceTime(){
+        int i1 = MaintenanceOperation.getTotalMaintenanceTime(equipment1);
+        assertEquals("wrong with total time of equipment1", i1, 11);
+        int i2 = MaintenanceOperation.getTotalMaintenanceTime(equipment2);
+        assertEquals("wrong with total time of equipment2", i2, 4);
+        int i3 = MaintenanceOperation.getTotalMaintenanceTime(equipment3);
+        assertEquals("wrong with total time of equipment3", i3, 8);
+        int i4 = MaintenanceOperation.getTotalMaintenanceTime(equipment4);
+        assertEquals("wrong with total time of equipment4", i4, 2);
+
+//        int i5 = MaintenanceOperation.getTotalMaintenanceTime();
+    }
 
 
 }
