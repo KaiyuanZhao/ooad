@@ -41,13 +41,16 @@ public class MaintenanceOperation {
                 query.setFirstResult(0);
                 query.setMaxResults(1);
                 List<Record> records = query.list();
+//                System.out.println("=========" + DateUtils.getDateTimeFormatString(date) + "=========");
                 if (records != null && records.size() == 1) {
+//                    System.out.println(records.get(0));
                     lastMaintenanceDate = records.get(0).getDate();
                 }
                 Calendar calendar = DateUtils.getCalendar(lastMaintenanceDate);
                 calendar.add(Calendar.DAY_OF_YEAR, plan.getSpace());
                 Date newDate = calendar.getTime();
                 long intervalDays = (newDate.getTime() - date.getTime()) / MILL_SEC_DAY;
+//                System.out.println("=========" + intervalDays + "=========" + days + "=============");
                 if (intervalDays <= days) {
                     taskList.add(new Task(equipment, plan, newDate));
                 }
@@ -78,7 +81,7 @@ public class MaintenanceOperation {
     }
 
     public static List<Task> getMonthTask(int year, int month) {
-        Calendar calendar = DateUtils.getCalendar(year, month, 0);
+        Calendar calendar = DateUtils.getCalendar(year, month, 1);
         return getDaysTask(calendar.getTime(), calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
     }
 
