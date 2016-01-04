@@ -1,10 +1,11 @@
 package edu.fudan.ooad.operation;
 
 import edu.fudan.ooad.entity.Equipment;
-import edu.fudan.ooad.entity.Plan;
+import edu.fudan.ooad.entity.Task;
 import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.util.DateUtils;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -14,12 +15,25 @@ import java.util.List;
  */
 public class MaintenanceOperation {
 
-    public static List<Plan> getTenDaysPlan(Date date) {
+    public static List<Task> getTenDaysTask(Date date) {
         return Collections.emptyList();
     }
 
-    public static List<Plan> getTenDaysPlan() {
-        return getTenDaysPlan(DateUtils.getCurrentTime());
+    public static List<Task> getTenDaysTask() {
+        return getTenDaysTask(DateUtils.getCurrentTime());
+    }
+
+    public static List<Task> getMonthTask() {
+        Calendar calendar = DateUtils.getCalendar();
+        return getMonthTask(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
+    }
+
+    public static List<Task> getMonthTask(int month) {
+        return getMonthTask(DateUtils.getCalendar().get(Calendar.YEAR), month);
+    }
+
+    public static List<Task> getMonthTask(int year, int month) {
+        return Collections.emptyList();
     }
 
     public static int getTotalMaintenanceTime(Equipment equipment) {
