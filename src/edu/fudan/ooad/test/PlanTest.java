@@ -2,7 +2,6 @@ package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.Equipment;
 import edu.fudan.ooad.entity.Plan;
-import edu.fudan.ooad.entity.Record;
 import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.operation.BaseOperation;
 import org.junit.AfterClass;

@@ -1,6 +1,3 @@
-import edu.fudan.ooad.entity.Equipment;
-import edu.fudan.ooad.operation.MaintenanceOperation;
-
 /**
  * Created by Kaiyuan on 2016/1/4.
  */

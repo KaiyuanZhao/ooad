@@ -15,11 +15,10 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by lss on 2016/1/4.
- *
+ * <p>
  * test query maintenance tasks in 10 days
  * test query total maintenance time for certain machine
  * test query total maintenance time for certain machine in certain type
- *
  */
 public class FunctionTest {
     static Type type1 = new Type("TV", "television");
@@ -132,6 +131,14 @@ public class FunctionTest {
         assertEquals("something wrong with record insert", 7, BaseOperation.queryAll(Record.class).size());
     }
 
+    private static void deleteAll() {
+        BaseOperation.delete(Record.class);
+        BaseOperation.delete(Plan.class);
+        BaseOperation.delete(Equipment.class);
+        BaseOperation.delete(Type.class);
+        BaseOperation.delete(Engineer.class);
+    }
+
     @Test
     public void testGetMonthTask() {
         List<Task> l = MaintenanceOperation.getMonthTask(2016, 1);
@@ -159,14 +166,6 @@ public class FunctionTest {
         assertEquals("wrong with total time in certain type - equipment1", i5, 6);
         int i6 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan2");
         assertEquals("wrong with total time of certain type - equipment3", i6, 3);
-    }
-
-    private  static void deleteAll(){
-        BaseOperation.delete(Record.class);
-        BaseOperation.delete(Plan.class);
-        BaseOperation.delete(Equipment.class);
-        BaseOperation.delete(Type.class);
-        BaseOperation.delete(Engineer.class);
     }
 
 
