@@ -100,10 +100,9 @@ public class FunctionTest {
         // machine A101 of small maintenance - 2015/12/1
         // machine A200 of small maintenance - 2015/12/1
         // machine A200 of large maintenance - 2016/1/1
-        // machine A201 of small maintenance - 2015/1/5
+        // machine A201 of small maintenance - 2016/1/5
         Record r0 = new Record("r1", "plan0", "A100", engineer.getId(),
                 DateUtils.getCalendar(2015, 10, 10).getTime(), 3, "cleaning");
-
 
         Record r1 = new Record("r2", "plan0", "A100", engineer.getId(),
                 DateUtils.getCalendar(2015, 11, 10).getTime(), 3, "checking");
