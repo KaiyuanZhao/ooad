@@ -33,14 +33,13 @@ public class EquipmentTest {
         // add equipment
         BaseOperation.insert(equipment);
         List<Equipment> list = BaseOperation.query(Equipment.class, equipment.getId());
-        assertNotNull("failure in equipment insertion", list);
-        assertEquals(equipment, list.get(0));
+        assertEquals("failure in equipment insertion", list.size(), 1);
     }
 
     @AfterClass
     public static void tearDownAfterTest(){
-        BaseOperation.delete(type);
         BaseOperation.delete(equipment);
+        BaseOperation.delete(type);
     }
 
 
