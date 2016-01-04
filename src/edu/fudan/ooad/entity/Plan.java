@@ -1,4 +1,4 @@
-package edu.fudan.ooad;
+package edu.fudan.ooad.entity;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,7 +9,7 @@ import javax.persistence.Id;
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Plan {
+public class Plan implements IEntity {
     private String id;
     private String typeId;
     private String interval;

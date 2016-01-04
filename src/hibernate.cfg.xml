@@ -10,11 +10,11 @@
         <property name="connection.username">root</property>
         <property name="connection.password">123456</property>
         <property name="connection.characterEncoding">utf-8</property>
-        <mapping class="edu.fudan.ooad.Engineer"/>
-        <mapping class="edu.fudan.ooad.Equipment"/>
-        <mapping class="edu.fudan.ooad.Plan"/>
-        <mapping class="edu.fudan.ooad.Record"/>
-        <mapping class="edu.fudan.ooad.Type"/>
+        <mapping class="edu.fudan.ooad.entity.Engineer"/>
+        <mapping class="edu.fudan.ooad.entity.Equipment"/>
+        <mapping class="edu.fudan.ooad.entity.Plan"/>
+        <mapping class="edu.fudan.ooad.entity.Record"/>
+        <mapping class="edu.fudan.ooad.entity.Type"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
