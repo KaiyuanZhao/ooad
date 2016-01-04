@@ -13,6 +13,14 @@ public class Engineer implements IEntity {
     private String id;
     private String name;
 
+    public Engineer() {
+    }
+
+    public Engineer(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Id
     @Column(name = "id", nullable = false, length = 25)
     public String getId() {

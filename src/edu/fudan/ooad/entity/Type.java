@@ -13,6 +13,14 @@ public class Type implements IEntity {
     private String id;
     private String name;
 
+    public Type() {
+    }
+
+    public Type(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Id
     @Column(name = "id", nullable = false, length = 25)
     public String getId() {

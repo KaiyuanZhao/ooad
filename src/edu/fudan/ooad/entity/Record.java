@@ -19,6 +19,19 @@ public class Record implements IEntity {
     private Integer duration;
     private String log;
 
+    public Record() {
+    }
+
+    public Record(String id, String planId, String equipmentId, String engineerId, Date date, Integer duration, String log) {
+        this.id = id;
+        this.planId = planId;
+        this.equipmentId = equipmentId;
+        this.engineerId = engineerId;
+        this.date = date;
+        this.duration = duration;
+        this.log = log;
+    }
+
     @Id
     @Column(name = "id", nullable = false, length = 25)
     public String getId() {
