@@ -1,4 +1,4 @@
-package edu.fudan.ooad;
+package edu.fudan.ooad.entity;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Record {
+public class Record implements IEntity {
     private String id;
     private String planId;
     private String equipmentId;
