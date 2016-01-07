@@ -14,20 +14,22 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lss on 2016/1/4.
+ *
+ * Test the insertion and deletion of Equipment
  */
 public class EquipmentTest {
-    static Type type = new Type("type1", "name1");
-    static Equipment equipment = new Equipment("test1", type.getId(), "model", "location", Calendar.getInstance().getTime());
+    private static Type type = new Type("type1", "name1");
+    private static Equipment equipment = new Equipment("test1", type.getId(), "model", "location", Calendar.getInstance().getTime());
 
     @BeforeClass
-    public static void setUPBeforeTest() {
-        BaseOperation.insert(type);
+    public static void setUpBeforeTest() {
+        type.insert();
     }
 
     @AfterClass
     public static void tearDownAfterTest() {
-        BaseOperation.delete(equipment);
-        BaseOperation.delete(type);
+        equipment.delete();
+        type.delete();
     }
 
     /**
@@ -35,8 +37,7 @@ public class EquipmentTest {
      */
     @Test
     public void testInsertEquipment() {
-        // add equipment
-        BaseOperation.insert(equipment);
+        equipment.insert();
         List<Equipment> list = BaseOperation.query(Equipment.class, equipment.getId());
         assertEquals("failure in equipment insertion", list.size(), 1);
     }

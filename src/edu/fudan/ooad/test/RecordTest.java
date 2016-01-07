@@ -12,6 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lss on 2016/1/4.
+ *
+ * Test the insertion and deletion of Record
  */
 public class RecordTest {
 
@@ -23,24 +25,24 @@ public class RecordTest {
 
     @BeforeClass
     public static void setUp() {
-        BaseOperation.insert(engineer);
-        BaseOperation.insert(tv);
-        BaseOperation.insert(equipment);
-        BaseOperation.insert(plan);
+        engineer.insert();
+        tv.insert();
+        equipment.insert();
+        plan.insert();
     }
 
     @AfterClass
     public static void tearDown() {
-        BaseOperation.delete(plan);
-        BaseOperation.delete(equipment);
-        BaseOperation.delete(tv);
+        plan.insert();
+        equipment.insert();
+        tv.insert();
     }
 
     @Test
     public void testInsertRecord() {
         Record record1 = new Record("rec1", "plan1", "A100", "eng1",
                 DateUtils.getCalendar(2015, 0, 30).getTime(), 2, "cleaning");
-        BaseOperation.insert(record1);
+        record1.insert();
         assertNotNull("failure in record insertion", BaseOperation.queryAll(Record.class));
         assertEquals("something wrong with record insert", 1, BaseOperation.queryAll(Record.class).size());
         BaseOperation.delete(record1);

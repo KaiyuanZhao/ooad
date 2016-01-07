@@ -11,15 +11,17 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by lss on 2016/1/4.
+ *
+ * Test the insertion and deletion of Engineer
  */
 public class EngineerTest {
     @Test
     public void testInsertEngineer() {
         Engineer engineer = new Engineer("eng1", "Jack");
-        BaseOperation.insert(engineer);
+        engineer.insert();
         List<Engineer> list = BaseOperation.query(Engineer.class, engineer.getId());
         assertNotNull("insert failed for engineer", list);
         assertEquals("Failure in engineer insertion!", engineer, list.get(0));
-        BaseOperation.delete(engineer);
+        engineer.delete();
     }
 }

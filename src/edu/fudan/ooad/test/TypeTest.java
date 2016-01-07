@@ -17,7 +17,7 @@ public class TypeTest {
     @Test
     public void testInsertType() {
         Type type = new Type("eng1", "Jack");
-        BaseOperation.insert(type);
+        type.insert();
         List<Type> list = BaseOperation.query(Type.class, type.getId());
         assertNotNull("insert failed for type", list);
         assertEquals("Failure in type insertion!", type, list.get(0));
