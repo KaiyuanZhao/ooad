@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -133,6 +134,10 @@ public class MaintenanceOperationTest extends BaseTest {
     public void testGetTenDayTask() {
         List<Task> tasks = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2016, 1, 1).getTime());
         assertEquals("something wrong with get 10 days' tasks - 1", 7, tasks.size());
+
+        // test exception cases
+        List<Task> tasks2 = MaintenanceOperation.getTenDaysTask(DateUtils.getCalendar(2014, 1, 1).getTime());
+        assertEquals("something wrong with get 10 days' tasks - 1", 0, tasks2.size());
     }
 
     @Test
@@ -145,6 +150,10 @@ public class MaintenanceOperationTest extends BaseTest {
         assertEquals("wrong with total time of equipment3", time3, 8);
         int time4 = MaintenanceOperation.getTotalMaintenanceTime("A201");
         assertEquals("wrong with total time of equipment4", time4, 2);
+
+        // test exception cases
+        int time5 = MaintenanceOperation.getTotalMaintenanceTime("A999");
+        assertEquals("fail to detect not existed equipments", time5, 0);
     }
 
     @Test
@@ -153,6 +162,10 @@ public class MaintenanceOperationTest extends BaseTest {
         assertEquals("wrong with total time in certain type - equipment1", time1, 6);
         int time2 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan2");
         assertEquals("wrong with total time of certain type - equipment3", time2, 3);
+
+        // test wrong plan id
+        int time3 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan23333");
+        assertEquals("fail to detect wrong plan id", time3, 0);
     }
 
 }
