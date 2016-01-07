@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by lss on 2016/1/4.
  */
-public class RecordTest {
+public class RecordTest extends BaseTest {
 
     static Engineer engineer = new Engineer("eng1", "Jack");
     static Type tv = new Type("TV", "television");
@@ -23,27 +23,28 @@ public class RecordTest {
 
     @BeforeClass
     public static void setUp() {
-        DatabaseOperation.insert(engineer);
-        DatabaseOperation.insert(tv);
-        DatabaseOperation.insert(equipment);
-        DatabaseOperation.insert(plan);
+        engineer.insert();
+        tv.insert();
+        equipment.insert();
+        plan.insert();
     }
 
     @AfterClass
     public static void tearDown() {
-        DatabaseOperation.delete(plan);
-        DatabaseOperation.delete(equipment);
-        DatabaseOperation.delete(tv);
+        plan.delete();
+        tv.delete();
+        equipment.delete();
+        plan.delete();
     }
 
     @Test
     public void testInsertRecord() {
-        Record record1 = new Record("rec1", "plan1", "A100", "eng1",
+        Record record = new Record("rec1", "plan1", "A100", "eng1",
                 DateUtils.getCalendar(2015, 0, 30).getTime(), 2, "cleaning");
-        DatabaseOperation.insert(record1);
+        record.insert();
         assertNotNull("failure in record insertion", DatabaseOperation.queryAll(Record.class));
         assertEquals("something wrong with record insert", 1, DatabaseOperation.queryAll(Record.class).size());
-        DatabaseOperation.delete(record1);
+        record.delete();
     }
 
 }

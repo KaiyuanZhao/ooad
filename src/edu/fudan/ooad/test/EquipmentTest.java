@@ -3,31 +3,23 @@ package edu.fudan.ooad.test;
 import edu.fudan.ooad.entity.Equipment;
 import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.operation.DatabaseOperation;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Calendar;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by lss on 2016/1/4.
  */
-public class EquipmentTest {
-    static Type type = new Type("type1", "name1");
-    static Equipment equipment = new Equipment("test1", type.getId(), "model", "location", Calendar.getInstance().getTime());
+public class EquipmentTest extends BaseTest {
+    private static Type type = new Type("type1", "name1");
 
     @BeforeClass
     public static void setUPBeforeTest() {
-        DatabaseOperation.insert(type);
-    }
-
-    @AfterClass
-    public static void tearDownAfterTest() {
-        DatabaseOperation.delete(equipment);
-        DatabaseOperation.delete(type);
+        type.insert();
     }
 
     /**
@@ -36,10 +28,11 @@ public class EquipmentTest {
     @Test
     public void testInsertEquipment() {
         // add equipment
-        DatabaseOperation.insert(equipment);
-        List<Equipment> list = DatabaseOperation.queryById(Equipment.class, equipment.getId());
-        assertEquals("failure in equipment insertion", list.size(), 1);
+        Equipment equipment = new Equipment("test1", type.getId(), "model", "location", Calendar.getInstance().getTime());
+        equipment.insert();
+        Equipment databaseEquipment = DatabaseOperation.queryById(Equipment.class, equipment.getId());
+        assertNotNull("insert failed", databaseEquipment);
+        assertEquals("failure in equipment insertion", equipment.toString(), databaseEquipment.toString());
     }
-
 
 }

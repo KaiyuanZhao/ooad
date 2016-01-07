@@ -1,5 +1,6 @@
 package edu.fudan.ooad.entity;
 
+import edu.fudan.ooad.util.DateUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -132,7 +133,7 @@ public class Record extends BaseEntity {
                 ", planId='" + planId + '\'' +
                 ", equipmentId='" + equipmentId + '\'' +
                 ", engineerId='" + engineerId + '\'' +
-                ", date=" + date +
+                ", date=" + DateUtils.getDateTimeFormatString(date) +
                 ", duration=" + duration +
                 ", log='" + log + '\'' +
                 '}';

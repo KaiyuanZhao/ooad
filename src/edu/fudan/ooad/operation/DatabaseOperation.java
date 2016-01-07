@@ -1,10 +1,12 @@
 package edu.fudan.ooad.operation;
 
-import edu.fudan.ooad.entity.BaseEntity;
+import com.sun.istack.internal.Nullable;
+import edu.fudan.ooad.entity.IEntity;
 import edu.fudan.ooad.provider.HibernateManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class DatabaseOperation {
 
-    public static <T extends BaseEntity> void insert(T entity) {
+    public static <T extends IEntity> void insert(T entity) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -32,7 +34,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> void delete(T entity) {
+    public static <T extends IEntity> void delete(T entity) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -49,7 +51,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> void delete(Class<T> clazz) {
+    public static <T extends IEntity> void delete(Class<T> clazz) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -66,7 +68,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> void update(T entity) {
+    public static <T extends IEntity> void update(T entity) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -83,22 +85,23 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> List<T> queryById(Class<T> clazz, String id) {
+    @Nullable
+    public static <T extends IEntity> T queryById(Class<T> clazz, String id) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
-            String queryString = String.format("from %s where id='%s'", clazz.getSimpleName(), id);
-            Query query = session.createQuery(queryString);
-            return query.list();
+            return (T) session.createCriteria(clazz)
+                    .add(Restrictions.idEq(id))
+                    .uniqueResult();
         } catch (Exception e) {
             e.printStackTrace();
-            return Collections.emptyList();
+            return null;
         } finally {
             HibernateManager.closeSession(session);
         }
     }
 
-    public static <T> List<T> queryHQL(String hql) {
+    public static <T extends IEntity> List<T> queryHQL(String hql) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
@@ -112,7 +115,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> List<T> queryHQL(Class<T> clazz, String hql) {
+    public static <T extends IEntity> List<T> queryHQL(Class<T> clazz, String hql) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
@@ -127,7 +130,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> List<T> querySQL(String sql) {
+    public static <T extends IEntity> List<T> querySQL(String sql) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
@@ -141,7 +144,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> List<T> queryAll(Class<T> clazz) {
+    public static <T extends IEntity> List<T> queryAll(Class<T> clazz) {
         Session session = null;
         try {
             session = HibernateManager.getSession();
