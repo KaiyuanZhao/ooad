@@ -11,7 +11,6 @@ import java.util.Date;
  */
 @Entity
 public class Equipment extends IEntity {
-    private String id;
     private String typeId;
     private String model;
     private String location;
@@ -21,21 +20,11 @@ public class Equipment extends IEntity {
     }
 
     public Equipment(String id, String typeId, String model, String location, Date time) {
-        this.id = id;
+        super(id);
         this.typeId = typeId;
         this.model = model;
         this.location = location;
         this.time = time;
-    }
-
-    @Id
-    @Column(name = "id", nullable = false, length = 25)
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Basic
@@ -79,35 +68,9 @@ public class Equipment extends IEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Equipment equipment = (Equipment) o;
-
-        if (id != null ? !id.equals(equipment.id) : equipment.id != null) return false;
-        if (typeId != null ? !typeId.equals(equipment.typeId) : equipment.typeId != null) return false;
-        if (model != null ? !model.equals(equipment.model) : equipment.model != null) return false;
-        if (location != null ? !location.equals(equipment.location) : equipment.location != null) return false;
-        if (time != null ? !time.equals(equipment.time) : equipment.time != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
-        result = 31 * result + (model != null ? model.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Equipment{" +
-                "id='" + id + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", typeId='" + typeId + '\'' +
                 ", model='" + model + '\'' +
                 ", location='" + location + '\'' +

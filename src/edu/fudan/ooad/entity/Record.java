@@ -11,7 +11,6 @@ import java.util.Date;
  */
 @Entity
 public class Record extends IEntity {
-    private String id;
     private String planId;
     private String equipmentId;
     private String engineerId;
@@ -23,23 +22,13 @@ public class Record extends IEntity {
     }
 
     public Record(String id, String planId, String equipmentId, String engineerId, Date date, Integer duration, String log) {
-        this.id = id;
+        super(id);
         this.planId = planId;
         this.equipmentId = equipmentId;
         this.engineerId = engineerId;
         this.date = date;
         this.duration = duration;
         this.log = log;
-    }
-
-    @Id
-    @Column(name = "id", nullable = false, length = 25)
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Basic
@@ -103,39 +92,9 @@ public class Record extends IEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Record record = (Record) o;
-
-        if (id != null ? !id.equals(record.id) : record.id != null) return false;
-        if (planId != null ? !planId.equals(record.planId) : record.planId != null) return false;
-        if (equipmentId != null ? !equipmentId.equals(record.equipmentId) : record.equipmentId != null) return false;
-        if (engineerId != null ? !engineerId.equals(record.engineerId) : record.engineerId != null) return false;
-        if (date != null ? !date.equals(record.date) : record.date != null) return false;
-        if (duration != null ? !duration.equals(record.duration) : record.duration != null) return false;
-        if (log != null ? !log.equals(record.log) : record.log != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (planId != null ? planId.hashCode() : 0);
-        result = 31 * result + (equipmentId != null ? equipmentId.hashCode() : 0);
-        result = 31 * result + (engineerId != null ? engineerId.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
-        result = 31 * result + (log != null ? log.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Record{" +
-                "id='" + id + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", planId='" + planId + '\'' +
                 ", equipmentId='" + equipmentId + '\'' +
                 ", engineerId='" + engineerId + '\'' +
