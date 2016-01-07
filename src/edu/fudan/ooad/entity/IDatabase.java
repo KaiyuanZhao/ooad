@@ -1,9 +1,9 @@
-package edu.fudan.ooad.operation;
+package edu.fudan.ooad.entity;
 
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
-public interface IOperation {
+public interface IDatabase {
 
     void insert();
 

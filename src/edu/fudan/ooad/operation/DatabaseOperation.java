@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Kaiyuan on 2016/1/4.
  */
 @SuppressWarnings("unchecked")
-public class BaseOperation {
+public class DatabaseOperation {
 
     public static <T extends IEntity> void insert(T entity) {
         Session session = null;

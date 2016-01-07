@@ -85,7 +85,7 @@ public class MaintenanceOperation {
     public static int getTotalMaintenanceTime(String equipmentId) {
         String hqlString = String.format("where equipmentId='%s'",
                 equipmentId);
-        List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
+        List<Record> records = DatabaseOperation.queryHQL(Record.class, hqlString);
         int total = 0;
         for (Record record :
                 records) {
@@ -97,7 +97,7 @@ public class MaintenanceOperation {
     public static int getTotalMaintenanceTime(Equipment equipment, String planId) {
         String hqlString = String.format("where equipmentId='%s' and planId='%s'",
                 equipment.getId(), planId);
-        List<Record> records = BaseOperation.queryHQL(Record.class, hqlString);
+        List<Record> records = DatabaseOperation.queryHQL(Record.class, hqlString);
         int total = 0;
         for (Record record :
                 records) {

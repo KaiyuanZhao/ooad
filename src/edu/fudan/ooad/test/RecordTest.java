@@ -1,7 +1,7 @@
 package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.*;
-import edu.fudan.ooad.operation.BaseOperation;
+import edu.fudan.ooad.operation.DatabaseOperation;
 import edu.fudan.ooad.util.DateUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -23,27 +23,27 @@ public class RecordTest {
 
     @BeforeClass
     public static void setUp() {
-        BaseOperation.insert(engineer);
-        BaseOperation.insert(tv);
-        BaseOperation.insert(equipment);
-        BaseOperation.insert(plan);
+        DatabaseOperation.insert(engineer);
+        DatabaseOperation.insert(tv);
+        DatabaseOperation.insert(equipment);
+        DatabaseOperation.insert(plan);
     }
 
     @AfterClass
     public static void tearDown() {
-        BaseOperation.delete(plan);
-        BaseOperation.delete(equipment);
-        BaseOperation.delete(tv);
+        DatabaseOperation.delete(plan);
+        DatabaseOperation.delete(equipment);
+        DatabaseOperation.delete(tv);
     }
 
     @Test
     public void testInsertRecord() {
         Record record1 = new Record("rec1", "plan1", "A100", "eng1",
                 DateUtils.getCalendar(2015, 0, 30).getTime(), 2, "cleaning");
-        BaseOperation.insert(record1);
-        assertNotNull("failure in record insertion", BaseOperation.queryAll(Record.class));
-        assertEquals("something wrong with record insert", 1, BaseOperation.queryAll(Record.class).size());
-        BaseOperation.delete(record1);
+        DatabaseOperation.insert(record1);
+        assertNotNull("failure in record insertion", DatabaseOperation.queryAll(Record.class));
+        assertEquals("something wrong with record insert", 1, DatabaseOperation.queryAll(Record.class).size());
+        DatabaseOperation.delete(record1);
     }
 
 }

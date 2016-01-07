@@ -3,7 +3,7 @@ package edu.fudan.ooad.test;
 import edu.fudan.ooad.entity.Equipment;
 import edu.fudan.ooad.entity.Plan;
 import edu.fudan.ooad.entity.Type;
-import edu.fudan.ooad.operation.BaseOperation;
+import edu.fudan.ooad.operation.DatabaseOperation;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,22 +25,22 @@ public class PlanTest {
 
     @BeforeClass
     public static void setUp() {
-        BaseOperation.insert(type);
-        BaseOperation.insert(equipment);
+        DatabaseOperation.insert(type);
+        DatabaseOperation.insert(equipment);
     }
 
     @AfterClass
     public static void tearDown() {
-        BaseOperation.delete(type);
-        BaseOperation.delete(equipment);
+        DatabaseOperation.delete(type);
+        DatabaseOperation.delete(equipment);
     }
 
     @Test
     public void testInsertPlan() {
         Plan p = new Plan("p1", type.getId(), 30, "small", "testing");
-        BaseOperation.insert(p);
-        assertNotNull("failure in plan insertion", BaseOperation.query(Plan.class, p.getId()));
-        assertEquals("failure in plan insertion", 1, BaseOperation.queryAll(Plan.class).size());
-        BaseOperation.delete(p);
+        DatabaseOperation.insert(p);
+        assertNotNull("failure in plan insertion", DatabaseOperation.query(Plan.class, p.getId()));
+        assertEquals("failure in plan insertion", 1, DatabaseOperation.queryAll(Plan.class).size());
+        DatabaseOperation.delete(p);
     }
 }

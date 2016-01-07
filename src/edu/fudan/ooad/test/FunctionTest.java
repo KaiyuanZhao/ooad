@@ -1,7 +1,7 @@
 package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.*;
-import edu.fudan.ooad.operation.BaseOperation;
+import edu.fudan.ooad.operation.DatabaseOperation;
 import edu.fudan.ooad.operation.MaintenanceOperation;
 import edu.fudan.ooad.util.DateUtils;
 import org.junit.AfterClass;
@@ -30,9 +30,9 @@ public class FunctionTest {
     @BeforeClass
     public static void setUp() {
         deleteAll();
-        BaseOperation.insert(type1);
-        BaseOperation.insert(type2);
-        BaseOperation.insert(engineer);
+        DatabaseOperation.insert(type1);
+        DatabaseOperation.insert(type2);
+        DatabaseOperation.insert(engineer);
         testInsertEquipment();
         testInsertPlan();
         testInsertRecord();
@@ -63,12 +63,12 @@ public class FunctionTest {
         equipment4 = new Equipment("A201", type2.getId(), "model", "location",
                 DateUtils.getCalendar(2015, 11, 5).getTime());
 
-        BaseOperation.insert(equipment1);
-        BaseOperation.insert(equipment2);
-        BaseOperation.insert(equipment3);
-        BaseOperation.insert(equipment4);
-        assertNotNull("failure in equipment insertion", BaseOperation.queryAll(Equipment.class));
-        assertEquals("failure in equipment insertion", 4, BaseOperation.queryAll(Equipment.class).size());
+        DatabaseOperation.insert(equipment1);
+        DatabaseOperation.insert(equipment2);
+        DatabaseOperation.insert(equipment3);
+        DatabaseOperation.insert(equipment4);
+        assertNotNull("failure in equipment insertion", DatabaseOperation.queryAll(Equipment.class));
+        assertEquals("failure in equipment insertion", 4, DatabaseOperation.queryAll(Equipment.class).size());
 
     }
 
@@ -80,12 +80,12 @@ public class FunctionTest {
         Plan p2 = new Plan("plan1", type1.getId(), 60, "large", "comment");
         Plan p3 = new Plan("plan2", type2.getId(), 30, "small", "comment");
         Plan p4 = new Plan("plan3", type2.getId(), 60, "large", "comment");
-        BaseOperation.insert(p1);
-        BaseOperation.insert(p2);
-        BaseOperation.insert(p3);
-        BaseOperation.insert(p4);
-        assertNotNull("failure in plan insertion", BaseOperation.queryAll(Plan.class));
-        assertEquals("failure in plan insertion", 4, BaseOperation.queryAll(Plan.class).size());
+        DatabaseOperation.insert(p1);
+        DatabaseOperation.insert(p2);
+        DatabaseOperation.insert(p3);
+        DatabaseOperation.insert(p4);
+        assertNotNull("failure in plan insertion", DatabaseOperation.queryAll(Plan.class));
+        assertEquals("failure in plan insertion", 4, DatabaseOperation.queryAll(Plan.class).size());
     }
 
     /**
@@ -121,22 +121,22 @@ public class FunctionTest {
         Record r6 = new Record("r7", "plan3", "A200", engineer.getId(),
                 DateUtils.getCalendar(2016, 0, 1).getTime(), 5, "repairing");
 
-        BaseOperation.insert(r0);
-        BaseOperation.insert(r1);
-        BaseOperation.insert(r2);
-        BaseOperation.insert(r3);
-        BaseOperation.insert(r4);
-        BaseOperation.insert(r5);
-        BaseOperation.insert(r6);
-        assertEquals("something wrong with record insert", 7, BaseOperation.queryAll(Record.class).size());
+        DatabaseOperation.insert(r0);
+        DatabaseOperation.insert(r1);
+        DatabaseOperation.insert(r2);
+        DatabaseOperation.insert(r3);
+        DatabaseOperation.insert(r4);
+        DatabaseOperation.insert(r5);
+        DatabaseOperation.insert(r6);
+        assertEquals("something wrong with record insert", 7, DatabaseOperation.queryAll(Record.class).size());
     }
 
     private static void deleteAll() {
-        BaseOperation.delete(Record.class);
-        BaseOperation.delete(Plan.class);
-        BaseOperation.delete(Equipment.class);
-        BaseOperation.delete(Type.class);
-        BaseOperation.delete(Engineer.class);
+        DatabaseOperation.delete(Record.class);
+        DatabaseOperation.delete(Plan.class);
+        DatabaseOperation.delete(Equipment.class);
+        DatabaseOperation.delete(Type.class);
+        DatabaseOperation.delete(Engineer.class);
     }
 
     @Test

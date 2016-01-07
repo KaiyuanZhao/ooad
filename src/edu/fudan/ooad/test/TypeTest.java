@@ -1,7 +1,7 @@
 package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.Type;
-import edu.fudan.ooad.operation.BaseOperation;
+import edu.fudan.ooad.operation.DatabaseOperation;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,10 +17,10 @@ public class TypeTest {
     @Test
     public void testInsertType() {
         Type type = new Type("eng1", "Jack");
-        BaseOperation.insert(type);
-        List<Type> list = BaseOperation.query(Type.class, type.getId());
+        DatabaseOperation.insert(type);
+        List<Type> list = DatabaseOperation.query(Type.class, type.getId());
         assertNotNull("insert failed for type", list);
         assertEquals("Failure in type insertion!", type, list.get(0));
-        BaseOperation.delete(type);
+        DatabaseOperation.delete(type);
     }
 }

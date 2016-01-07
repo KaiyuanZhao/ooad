@@ -1,7 +1,7 @@
 package edu.fudan.ooad.test;
 
 import edu.fudan.ooad.entity.Engineer;
-import edu.fudan.ooad.operation.BaseOperation;
+import edu.fudan.ooad.operation.DatabaseOperation;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,10 +16,10 @@ public class EngineerTest {
     @Test
     public void testInsertEngineer() {
         Engineer engineer = new Engineer("eng1", "Jack");
-        BaseOperation.insert(engineer);
-        List<Engineer> list = BaseOperation.query(Engineer.class, engineer.getId());
+        DatabaseOperation.insert(engineer);
+        List<Engineer> list = DatabaseOperation.query(Engineer.class, engineer.getId());
         assertNotNull("insert failed for engineer", list);
         assertEquals("Failure in engineer insertion!", engineer, list.get(0));
-        BaseOperation.delete(engineer);
+        DatabaseOperation.delete(engineer);
     }
 }

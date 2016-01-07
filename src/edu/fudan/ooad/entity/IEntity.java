@@ -1,7 +1,6 @@
 package edu.fudan.ooad.entity;
 
-import edu.fudan.ooad.operation.BaseOperation;
-import edu.fudan.ooad.operation.IOperation;
+import edu.fudan.ooad.operation.DatabaseOperation;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -11,7 +10,7 @@ import javax.persistence.MappedSuperclass;
  * Created by Kaiyuan on 2016/1/4.
  */
 @MappedSuperclass
-public abstract class IEntity implements IOperation {
+public abstract class IEntity implements IDatabase {
     private String id;
 
     public IEntity() {
@@ -33,17 +32,17 @@ public abstract class IEntity implements IOperation {
 
     @Override
     public void insert() {
-        BaseOperation.insert(this);
+        DatabaseOperation.insert(this);
     }
 
     @Override
     public void update() {
-        BaseOperation.update(this);
+        DatabaseOperation.update(this);
     }
 
     @Override
     public void delete() {
-        BaseOperation.delete(this);
+        DatabaseOperation.delete(this);
     }
 
     @Override
