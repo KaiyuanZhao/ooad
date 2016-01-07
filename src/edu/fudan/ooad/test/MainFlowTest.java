@@ -18,7 +18,7 @@ public class MainFlowTest extends BaseTest {
     private final static String model = "model";
     private final static String location = "location";
 
-    private final static Type type = new Type("typeid", "typename");
+    private final static Type type = new Type("typeId", "typename");
     private final static Engineer engineer = new Engineer("eng1", "Jack");
 
     private final static Date installTime1 = DateUtils.getCalendar(2015, 10, 1).getTime();
