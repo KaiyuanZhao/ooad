@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -22,9 +21,10 @@ import static org.junit.Assert.assertNotNull;
  */
 public class MaintenanceOperationTest extends BaseTest {
 
-    private static Type type1 = new Type("TV", "television");
-    private static Type type2 = new Type("RR", "refrigerator");
-    private static Engineer engineer = new Engineer("eng1", "Jack");
+    private final static Type type1 = new Type("TV", "television");
+    private final static Type type2 = new Type("RR", "refrigerator");
+    private final static Engineer engineer = new Engineer("eng1", "Jack");
+    @SuppressWarnings("FieldCanBeLocal")
     private static Equipment equipment1, equipment2, equipment3, equipment4;
 
     @BeforeClass

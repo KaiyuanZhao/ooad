@@ -4,15 +4,14 @@ import edu.fudan.ooad.entity.Type;
 import edu.fudan.ooad.operation.DatabaseOperation;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by lss on 2016/1/4.
  */
 public class TypeTest extends BaseTest {
-    private Type type = new Type("eng1", "Jack");
+
+    private final static Type type = new Type("eng1", "Jack");
 
     @Test
     public void testType() {
