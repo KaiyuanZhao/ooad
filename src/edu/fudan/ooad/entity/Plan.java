@@ -1,5 +1,8 @@
 package edu.fudan.ooad.entity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +11,7 @@ import javax.persistence.Entity;
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Plan extends IEntity {
+public class Plan extends BaseEntity {
     private String typeId;
     private int space;
     private String name;
@@ -63,6 +66,34 @@ public class Plan extends IEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Plan)) return false;
+
+        Plan plan = (Plan) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(space, plan.space)
+                .append(typeId, plan.typeId)
+                .append(name, plan.name)
+                .append(comment, plan.comment)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(typeId)
+                .append(space)
+                .append(name)
+                .append(comment)
+                .toHashCode();
     }
 
     @Override

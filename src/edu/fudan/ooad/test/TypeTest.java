@@ -18,7 +18,7 @@ public class TypeTest {
     public void testInsertType() {
         Type type = new Type("eng1", "Jack");
         DatabaseOperation.insert(type);
-        List<Type> list = DatabaseOperation.query(Type.class, type.getId());
+        List<Type> list = DatabaseOperation.queryById(Type.class, type.getId());
         assertNotNull("insert failed for type", list);
         assertEquals("Failure in type insertion!", type, list.get(0));
         DatabaseOperation.delete(type);

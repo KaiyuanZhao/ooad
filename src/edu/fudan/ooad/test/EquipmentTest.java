@@ -37,7 +37,7 @@ public class EquipmentTest {
     public void testInsertEquipment() {
         // add equipment
         DatabaseOperation.insert(equipment);
-        List<Equipment> list = DatabaseOperation.query(Equipment.class, equipment.getId());
+        List<Equipment> list = DatabaseOperation.queryById(Equipment.class, equipment.getId());
         assertEquals("failure in equipment insertion", list.size(), 1);
     }
 

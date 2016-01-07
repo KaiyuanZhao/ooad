@@ -1,6 +1,6 @@
 package edu.fudan.ooad.operation;
 
-import edu.fudan.ooad.entity.IEntity;
+import edu.fudan.ooad.entity.BaseEntity;
 import edu.fudan.ooad.provider.HibernateManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class DatabaseOperation {
 
-    public static <T extends IEntity> void insert(T entity) {
+    public static <T extends BaseEntity> void insert(T entity) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -83,7 +83,7 @@ public class DatabaseOperation {
         }
     }
 
-    public static <T> List<T> query(Class<T> clazz, String id) {
+    public static <T> List<T> queryById(Class<T> clazz, String id) {
         Session session = null;
         try {
             session = HibernateManager.getSession();

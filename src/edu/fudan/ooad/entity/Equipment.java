@@ -1,16 +1,18 @@
 package edu.fudan.ooad.entity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Equipment extends IEntity {
+public class Equipment extends BaseEntity {
     private String typeId;
     private String model;
     private String location;
@@ -65,6 +67,34 @@ public class Equipment extends IEntity {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Equipment)) return false;
+
+        Equipment equipment = (Equipment) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(typeId, equipment.typeId)
+                .append(model, equipment.model)
+                .append(location, equipment.location)
+                .append(time, equipment.time)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(typeId)
+                .append(model)
+                .append(location)
+                .append(time)
+                .toHashCode();
     }
 
     @Override

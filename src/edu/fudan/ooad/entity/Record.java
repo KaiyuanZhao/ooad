@@ -1,16 +1,18 @@
 package edu.fudan.ooad.entity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Record extends IEntity {
+public class Record extends BaseEntity {
     private String planId;
     private String equipmentId;
     private String engineerId;
@@ -89,6 +91,38 @@ public class Record extends IEntity {
 
     public void setLog(String log) {
         this.log = log;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Record)) return false;
+
+        Record record = (Record) o;
+
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(planId, record.planId)
+                .append(equipmentId, record.equipmentId)
+                .append(engineerId, record.engineerId)
+                .append(date, record.date)
+                .append(duration, record.duration)
+                .append(log, record.log)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(planId)
+                .append(equipmentId)
+                .append(engineerId)
+                .append(date)
+                .append(duration)
+                .append(log)
+                .toHashCode();
     }
 
     @Override

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class PlanTest {
     // test insert maintenance plan for certain type
-    // test query maintenance tasks in 10 days
+    // test queryById maintenance tasks in 10 days
 
     static Type type = new Type("type1", "name1");
     static Equipment equipment = new Equipment("id1", type.getId(), "model", "location", Calendar.getInstance().getTime());
@@ -39,7 +39,7 @@ public class PlanTest {
     public void testInsertPlan() {
         Plan p = new Plan("p1", type.getId(), 30, "small", "testing");
         DatabaseOperation.insert(p);
-        assertNotNull("failure in plan insertion", DatabaseOperation.query(Plan.class, p.getId()));
+        assertNotNull("failure in plan insertion", DatabaseOperation.queryById(Plan.class, p.getId()));
         assertEquals("failure in plan insertion", 1, DatabaseOperation.queryAll(Plan.class).size());
         DatabaseOperation.delete(p);
     }

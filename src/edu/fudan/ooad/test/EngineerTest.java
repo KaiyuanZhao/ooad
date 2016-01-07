@@ -17,7 +17,7 @@ public class EngineerTest {
     public void testInsertEngineer() {
         Engineer engineer = new Engineer("eng1", "Jack");
         DatabaseOperation.insert(engineer);
-        List<Engineer> list = DatabaseOperation.query(Engineer.class, engineer.getId());
+        List<Engineer> list = DatabaseOperation.queryById(Engineer.class, engineer.getId());
         assertNotNull("insert failed for engineer", list);
         assertEquals("Failure in engineer insertion!", engineer, list.get(0));
         DatabaseOperation.delete(engineer);

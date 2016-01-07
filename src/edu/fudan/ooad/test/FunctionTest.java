@@ -4,6 +4,7 @@ import edu.fudan.ooad.entity.*;
 import edu.fudan.ooad.operation.DatabaseOperation;
 import edu.fudan.ooad.operation.MaintenanceOperation;
 import edu.fudan.ooad.util.DateUtils;
+import edu.fudan.ooad.util.TestUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,15 +22,15 @@ import static org.junit.Assert.assertNotNull;
  * test query total maintenance time for certain machine in certain type
  */
 public class FunctionTest {
+
     static Type type1 = new Type("TV", "television");
     static Type type2 = new Type("RR", "refrigerator");
     static Engineer engineer = new Engineer("eng1", "Jack");
     static Equipment equipment1, equipment2, equipment3, equipment4;
 
-
     @BeforeClass
     public static void setUp() {
-        deleteAll();
+        TestUtils.deleteAll();
         DatabaseOperation.insert(type1);
         DatabaseOperation.insert(type2);
         DatabaseOperation.insert(engineer);
@@ -40,7 +41,7 @@ public class FunctionTest {
 
     @AfterClass
     public static void tearDown() {
-        deleteAll();
+        TestUtils.deleteAll();
     }
 
     /**
@@ -131,13 +132,7 @@ public class FunctionTest {
         assertEquals("something wrong with record insert", 7, DatabaseOperation.queryAll(Record.class).size());
     }
 
-    private static void deleteAll() {
-        DatabaseOperation.delete(Record.class);
-        DatabaseOperation.delete(Plan.class);
-        DatabaseOperation.delete(Equipment.class);
-        DatabaseOperation.delete(Type.class);
-        DatabaseOperation.delete(Engineer.class);
-    }
+
 
     @Test
     public void testGetMonthTask() {

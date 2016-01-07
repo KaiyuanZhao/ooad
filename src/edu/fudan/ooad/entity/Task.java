@@ -1,5 +1,8 @@
 package edu.fudan.ooad.entity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import java.util.Date;
 
 /**
@@ -46,22 +49,25 @@ public class Task {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (!(o instanceof Task)) return false;
 
         Task task = (Task) o;
 
-        if (equipment != null ? !equipment.equals(task.equipment) : task.equipment != null) return false;
-        if (plan != null ? !plan.equals(task.plan) : task.plan != null) return false;
-        return date != null ? date.equals(task.date) : task.date == null;
-
+        return new EqualsBuilder()
+                .append(equipment, task.equipment)
+                .append(plan, task.plan)
+                .append(date, task.date)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = equipment != null ? equipment.hashCode() : 0;
-        result = 31 * result + (plan != null ? plan.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
+        return new HashCodeBuilder(17, 37)
+                .append(equipment)
+                .append(plan)
+                .append(date)
+                .toHashCode();
     }
 
     @Override
