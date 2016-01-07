@@ -6,8 +6,9 @@ import edu.fudan.ooad.entity.Record;
 import edu.fudan.ooad.entity.Task;
 import edu.fudan.ooad.provider.HibernateManager;
 import edu.fudan.ooad.util.DateUtils;
-import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +21,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class MaintenanceOperation {
 
-    public static final long MILL_SEC_DAY = 60 * 60 * 24 * 1000;
+    private static final long MILL_SEC_DAY = 60 * 60 * 24 * 1000;
 
     public static List<Task> getDaysTask(Date date, int days) {
         List<Task> taskList = new ArrayList<>();
@@ -34,15 +35,15 @@ public class MaintenanceOperation {
                 Equipment equipment = (Equipment) objects[0];
                 Plan plan = (Plan) objects[1];
                 Date lastMaintenanceDate = equipment.getTime();
-                String newHqlString = String.format("from Record where planId='%s' " +
-                                "and equipmentId='%s' order by date desc",
-                        plan.getId(), equipment.getId());
-                Query query = session.createQuery(newHqlString);
-                query.setFirstResult(0);
-                query.setMaxResults(1);
-                List<Record> records = query.list();
-                if (records != null && records.size() == 1) {
-                    lastMaintenanceDate = records.get(0).getDate();
+                Record record = (Record) session.createCriteria(Record.class)
+                        .add(Restrictions.eq("planId", plan.getId()))
+                        .add(Restrictions.eq("equipmentId", equipment.getId()))
+                        .addOrder(Order.desc("date"))
+                        .setFirstResult(0)
+                        .setMaxResults(1)
+                        .uniqueResult();
+                if (record != null) {
+                    lastMaintenanceDate = record.getDate();
                 }
                 Calendar calendar = DateUtils.getCalendar(lastMaintenanceDate);
                 calendar.add(Calendar.DAY_OF_YEAR, plan.getSpace());
@@ -83,25 +84,42 @@ public class MaintenanceOperation {
     }
 
     public static int getTotalMaintenanceTime(String equipmentId) {
-        String hqlString = String.format("where equipmentId='%s'",
-                equipmentId);
-        List<Record> records = DatabaseOperation.queryHQL(Record.class, hqlString);
+        Session session = null;
         int total = 0;
-        for (Record record :
-                records) {
-            total += record.getDuration();
+        try {
+            session = HibernateManager.getSession();
+            List<Record> records = session.createCriteria(Record.class)
+                    .add(Restrictions.eq("equipmentId", equipmentId))
+                    .list();
+            for (Record record :
+                    records) {
+                total += record.getDuration();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            HibernateManager.closeSession(session);
         }
         return total;
     }
 
     public static int getTotalMaintenanceTime(Equipment equipment, String planId) {
-        String hqlString = String.format("where equipmentId='%s' and planId='%s'",
-                equipment.getId(), planId);
-        List<Record> records = DatabaseOperation.queryHQL(Record.class, hqlString);
+        Session session = null;
         int total = 0;
-        for (Record record :
-                records) {
-            total += record.getDuration();
+        try {
+            session = HibernateManager.getSession();
+            List<Record> records = session.createCriteria(Record.class)
+                    .add(Restrictions.eq("equipmentId", equipment.getId()))
+                    .add(Restrictions.eq("planId", planId))
+                    .list();
+            for (Record record :
+                    records) {
+                total += record.getDuration();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            HibernateManager.closeSession(session);
         }
         return total;
     }
