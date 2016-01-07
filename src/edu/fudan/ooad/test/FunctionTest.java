@@ -148,7 +148,7 @@ public class FunctionTest extends BaseTest {
     }
 
     @Test
-    public void testGetTotalMaintenaceTimeWithPlan() {
+    public void testGetTotalMaintenanceTimeWithPlan() {
         int time1 = MaintenanceOperation.getTotalMaintenanceTime(equipment1, "plan0");
         assertEquals("wrong with total time in certain type - equipment1", time1, 6);
         int time2 = MaintenanceOperation.getTotalMaintenanceTime(equipment3, "plan2");

@@ -18,7 +18,7 @@ public class EquipmentTest extends BaseTest {
     private static Type type = new Type("type1", "name1");
 
     @BeforeClass
-    public static void setUPBeforeTest() {
+    public static void setUpBefore() {
         type.insert();
     }
 

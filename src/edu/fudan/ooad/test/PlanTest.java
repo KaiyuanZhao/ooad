@@ -24,15 +24,9 @@ public class PlanTest extends BaseTest {
     private static Equipment equipment = new Equipment("id1", type.getId(), "model", "location", Calendar.getInstance().getTime());
 
     @BeforeClass
-    public static void setUpBeforeClass() {
+    public static void setUpBefore() {
         type.insert();
         equipment.insert();
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() {
-        DatabaseOperation.delete(type);
-        DatabaseOperation.delete(equipment);
     }
 
     @Test
@@ -41,6 +35,5 @@ public class PlanTest extends BaseTest {
         plan.insert();
         assertNotNull("failure in plan insertion", DatabaseOperation.queryById(Plan.class, plan.getId()));
         assertEquals("failure in plan insertion", 1, DatabaseOperation.queryAll(Plan.class).size());
-        plan.delete();
     }
 }

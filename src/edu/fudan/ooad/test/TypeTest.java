@@ -19,6 +19,5 @@ public class TypeTest extends BaseTest {
         Type databaseType = DatabaseOperation.queryById(Type.class, type.getId());
         assertNotNull("insert failed for type", databaseType);
         assertEquals("Failure in type insertion!", type, databaseType);
-        type.delete();
     }
 }
