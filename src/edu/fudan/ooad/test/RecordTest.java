@@ -3,7 +3,6 @@ package edu.fudan.ooad.test;
 import edu.fudan.ooad.entity.*;
 import edu.fudan.ooad.operation.DatabaseOperation;
 import edu.fudan.ooad.util.DateUtils;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -32,14 +31,6 @@ public class RecordTest extends BaseTest {
         tv.insert();
         equipment.insert();
         plan.insert();
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        plan.delete();
-        tv.delete();
-        equipment.delete();
-        plan.delete();
     }
 
     @Test

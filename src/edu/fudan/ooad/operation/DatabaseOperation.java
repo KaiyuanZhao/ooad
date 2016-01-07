@@ -148,8 +148,8 @@ public class DatabaseOperation {
         Session session = null;
         try {
             session = HibernateManager.getSession();
-            Query query = session.createQuery("from " + clazz.getSimpleName());
-            return query.list();
+            return session.createCriteria(clazz)
+                    .list();
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();

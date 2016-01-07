@@ -15,7 +15,7 @@ public class BaseTest {
     }
 
     @AfterClass
-    public static void tearDownAfterClass() {
+    public static void tearDownAfterTest() {
         TestUtils.deleteAll();
     }
 
