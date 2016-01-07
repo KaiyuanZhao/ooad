@@ -34,14 +34,10 @@ public class PlanTest extends BaseTest {
     }
 
     @Test
-    public void testInsertPlan() {
+    public void testPlan() {
         plan.insert();
         assertNotNull("failure in plan insertion", DatabaseOperation.queryById(Plan.class, plan.getId()));
         assertEquals("failure in plan insertion", 1, DatabaseOperation.queryAll(Plan.class).size());
-    }
-
-    @Test
-    public void testDeletePlan(){
         plan.delete();
         assertNull("deletion of plan failed", DatabaseOperation.queryById(Plan.class, plan.getId()));
     }

@@ -18,15 +18,11 @@ public class EngineerTest extends BaseTest {
 
 
     @Test
-    public void testInsertEngineer() {
+    public void testEngineer() {
         engineer.insert();
         databaseEngineer = DatabaseOperation.queryById(Engineer.class, engineer.getId());
         assertNotNull("insert failed for engineer", databaseEngineer);
         assertEquals("Failure in engineer insertion!", engineer, databaseEngineer);
-    }
-
-    @Test
-    public void testDeleteEngineer(){
         engineer.delete();
         databaseEngineer = DatabaseOperation.queryById(Engineer.class, engineer.getId());
         assertNull("deletion of engineer failed", databaseEngineer);

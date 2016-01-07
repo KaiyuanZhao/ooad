@@ -34,14 +34,10 @@ public class RecordTest extends BaseTest {
     }
 
     @Test
-    public void testInsertRecord() {
+    public void testRecord() {
         record.insert();
         assertNotNull("failure in record insertion", DatabaseOperation.queryAll(Record.class));
         assertEquals("something wrong with record insert", 1, DatabaseOperation.queryAll(Record.class).size());
-    }
-
-    @Test
-    public void testDeleteRecord(){
         record.delete();
         assertNull("failure in deletion of record", DatabaseOperation.queryById(Record.class, record.getId()));
     }

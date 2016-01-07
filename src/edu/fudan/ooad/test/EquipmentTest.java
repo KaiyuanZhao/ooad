@@ -23,16 +23,12 @@ public class EquipmentTest extends BaseTest {
     private Equipment databaseEquipment;
 
     @Test
-    public void testInsertEquipment() {
+    public void testEquipment() {
         type.insert();
         equipment.insert();
         databaseEquipment = DatabaseOperation.queryById(Equipment.class, equipment.getId());
         assertNotNull("insert failed", databaseEquipment);
         assertEquals("failure in equipment insertion", equipment.toString(), databaseEquipment.toString());
-    }
-
-    @Test
-    public void testDeleteEquipment(){
         equipment.delete();
         databaseEquipment = DatabaseOperation.queryById(Equipment.class, equipment.getId());
         assertNull("deletion of equipment failed", databaseEquipment);
