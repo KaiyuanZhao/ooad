@@ -1,25 +1,12 @@
 package edu.fudan.ooad.entity;
 
-import edu.fudan.ooad.operation.BaseOperation;
-import edu.fudan.ooad.operation.IOperation;
-
 /**
- * Created by Kaiyuan on 2016/1/4.
+ * Created by Kaiyuan on 2016/1/7.
  */
-public abstract class IEntity implements IOperation {
+public interface IEntity {
 
-    @Override
-    public void insert() {
-        BaseOperation.insert(this);
-    }
+    String getId();
 
-    @Override
-    public void update() {
-        BaseOperation.update(this);
-    }
+    void setId(String id);
 
-    @Override
-    public void delete() {
-        BaseOperation.delete(this);
-    }
 }

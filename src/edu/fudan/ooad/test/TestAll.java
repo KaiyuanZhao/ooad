@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({EngineerTest.class, TypeTest.class, EquipmentTest.class, PlanTest.class,
-        RecordTest.class, FunctionTest.class})
+        RecordTest.class, MaintenanceOperationTest.class, MainFlowTest.class})
 public class TestAll {
 }

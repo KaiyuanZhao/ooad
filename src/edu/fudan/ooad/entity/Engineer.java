@@ -1,34 +1,25 @@
 package edu.fudan.ooad.entity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  * Created by Kaiyuan on 2016/1/4.
  */
 @Entity
-public class Engineer extends IEntity {
-    private String id;
+public class Engineer extends BaseEntity {
     private String name;
 
     public Engineer() {
     }
 
     public Engineer(String id, String name) {
-        this.id = id;
+        super(id);
         this.name = name;
-    }
-
-    @Id
-    @Column(name = "id", nullable = false, length = 25)
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Basic
@@ -44,28 +35,30 @@ public class Engineer extends IEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+
+        if (!(o instanceof Engineer)) return false;
 
         Engineer engineer = (Engineer) o;
 
-        if (id != null ? !id.equals(engineer.id) : engineer.id != null) return false;
-        if (name != null ? !name.equals(engineer.name) : engineer.name != null) return false;
-
-        return true;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(o))
+                .append(name, engineer.name)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return new HashCodeBuilder(17, 37)
+                .appendSuper(super.hashCode())
+                .append(name)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return "Engineer{" +
-                "id='" + id + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", name='" + name + '\'' +
-                '}';
+                "}";
     }
 }
